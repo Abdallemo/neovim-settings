@@ -15,3 +15,13 @@ vim.diagnostic.config({
 })
 
 require("config.lazy")
+
+--test
+vim.cmd("set wildmenu")
+vim.cmd('set wildmode=full')
+
+vim.cmd('set wildmode=full')
+vim.cmd('set wildignorecase')
+vim.cmd('set wildoptions=pum')
+
+
