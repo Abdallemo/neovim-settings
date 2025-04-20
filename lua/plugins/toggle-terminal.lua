@@ -3,35 +3,29 @@ return {
   version = "*",
   config = function()
     require("toggleterm").setup({
-      -- Custom configuration
-      size = 20,
-      open_mapping = [[<c-\>]], -- Ctrl+\ to toggle terminal
-      direction = "float",   -- or "horizontal"/"vertical"
-      float_opts = {
-        border = "rounded",  -- Single, double, shadow, curved, etc.
-        winblend = 3,        -- Transparency (0-100)
+      size = 15,                       -- Height in lines (adjust as needed)
+      direction = "horizontal",        -- Bottom panel
+      open_mapping = [[<C-\>]],        -- Your original toggle key
+      shade_terminals = true,          -- Subtle background dimming
+      persist_size = true,             -- Remembers size between sessions
+      close_on_exit = false,           -- Keep terminal alive
+      highlights = {
+        Normal = { guibg = "#1e1e2e" }, -- Match your colorscheme
+        NormalFloat = { link = "Normal" }, -- Consistent styling
       },
-      -- Command to run when terminal opens (optional)
     })
 
-    -- Custom terminal commands
+    -- Optional: NPM dev terminal (same horizontal style)
     local Terminal = require("toggleterm.terminal").Terminal
-
-    -- NPM Dev Server (custom command)
     local npm_dev = Terminal:new({
       cmd = "npm run dev",
+      direction = "horizontal",
       hidden = true,
-      direction = "float",
-      on_open = function(term)
-        vim.cmd("startinsert!")
-      end,
     })
 
-    -- Keymaps
-    vim.keymap.set("n", "<leader>td", function()
+    -- Keymaps (minimal style like your neo-tree setup)
+    vim.keymap.set("n", "<leader>tn", function()
       npm_dev:toggle()
-    end, { desc = "Toggle npm dev" })
-    vim.keymap.set("n", "<leader>tg", "<cmd>ToggleTerm direction=float<cr>", { desc = "Toggle float term" })
-    vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" }) -- Escape to normal mode
+    end)
   end,
 }
